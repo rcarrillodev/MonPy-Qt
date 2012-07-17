@@ -6,26 +6,26 @@ distintas monedas del mundo.
 
 Las monedas que soporta son:
 
-*Dolar Australiano – AUD
-*Dolar Canadiense – CAD
-*Euro -EUR
-*Libra – GBP
-*Rupia Hindú – INR
-*Yen Japonés -JPY
-*Peso Mexicano – MXN
-*Yuán Chino – RMB
-*Dolar Singapurense – SGD
-*Bath Thailandés – THB
-*Dolar Americano – USD 
++ Dolar Australiano – AUD
++ Dolar Canadiense – CAD
++ Euro -EUR
++ Libra – GBP
++ Rupia Hindú – INR
++ Yen Japonés -JPY
++ Peso Mexicano – MXN
++ Yuán Chino – RMB
++ Dolar Singapurense – SGD
++ Bath Thailandés – THB
++ Dolar Americano – USD 
 
 Su funcion tiene como base la Google Calculator, por lo tanto esta sujeto a la actualidad de los datos en el servicio.
 
 Requisitos del Sistema:
 =======================
 
-*Python 2.6 +
-*QT4
-*PyQt4
++ Python 2.6 +
++ QT4
++ PyQt4
 
 En la seccion de descargas de éste repositorio esta un paquete para Linux que incluye MonPy listo para ser ejecutado sin
 necesidad de instalar algun paquete adicional.
@@ -47,4 +47,4 @@ http://rafurudev.wordpress.com/programas-y-aplicaciones/monpy/
 Release Log:
 ============
 
-*(1.0) 16-Jul-2012 : Version Inicial
++ (1.0) 16-Jul-2012 : Version Inicial
