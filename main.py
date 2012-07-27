@@ -45,13 +45,9 @@ class monPy (QtGui.QMainWindow):
 		self.inputFrom.setValidator(QtGui.QDoubleValidator())
 		self.inputTo.setValidator(QtGui.QDoubleValidator())
 		self.inputFrom.setText("1")
-		#self.comboFrom.addItems(self.monEx)
-		#self.comboFrom.addItem(QtGui.QIcon("images/flags/jamaica.png"),"USD")
-		#self.comboTo.addItems(self.monEx)
 		self.fillCombos()
 		self.comboTo.setCurrentIndex(self.monEx.index("MXN"))
 		self.comboFrom.setCurrentIndex(self.monEx.index("USD"))
-		#Realizar conversion por default (1 USD a MXN)
 		self.convert()
 
 		pass
@@ -87,8 +83,7 @@ class monPy (QtGui.QMainWindow):
 		pass
 
 	def doConvert(self,mFrom,mTo,cant):
-		r=0.0
-		r=self.query.convert(cant,mFrom,mTo)
+		r=float(self.query.convert(cant,mFrom,mTo))
 		return r
 
 	def showAbout(self):

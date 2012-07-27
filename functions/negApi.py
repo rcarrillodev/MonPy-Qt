@@ -13,12 +13,11 @@ class negApi():
 		self.mCant=1
 		pass
 
-
+	
 	def doConvertion(self):
 		val=0
 		self.mCant=str(self.mCant)
 		try:
-			#resp=urllib2.urlopen("http://www.google.com/ig/calculator?hl=en&q="+self.mCant+self.monFrom+"=?"+self.monTo+"").read()		
 			resp=urllib2.urlopen("http://www.google.com/ig/calculator?hl=en&q=1"+self.monFrom+"=?"+self.monTo+"").read()		
 		except urllib2.URLError as error:
 			print ("Error al consultar el tipo de cambio, error de conexion")
@@ -36,8 +35,6 @@ class negApi():
     			except:
         			print "Couldn't eval " + v 
     			d[k] = v #Agrega el valor a la tupla
-    		#uni=d["rhs"].decode('utf-8','ignore')
-    		#print uni
 		try:
 			val= float(re.sub("\D+.\D+","", d["rhs"].decode('utf-8','ignore')))
 			conv=val*float(self.mCant)
@@ -57,6 +54,5 @@ if __name__ == '__main__':
 	convert=negApi()
 	print convert.convert(1,"USD","MXN")	
 
-#TODO: Manejar "Millones" 
 
 
