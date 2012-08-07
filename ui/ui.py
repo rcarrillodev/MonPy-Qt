@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Tue Aug  7 01:09:49 2012
+# Created: Tue Aug  7 13:05:45 2012
 #      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -59,7 +59,7 @@ class Ui_MainWindow(object):
         self.btnConf.setGeometry(QtCore.QRect(300, 121, 24, 20))
         self.btnConf.setText(_fromUtf8(""))
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("../MonPy-Qt/images/gear.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/Images/images/gear.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btnConf.setIcon(icon1)
         self.btnConf.setFlat(True)
         self.btnConf.setObjectName(_fromUtf8("btnConf"))
@@ -79,3 +79,4 @@ class Ui_MainWindow(object):
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "a:", None, QtGui.QApplication.UnicodeUTF8))
         self.btnConf.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p><span style=\" vertical-align:sub;\">Establecer monedas actuales como predeterminadas</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 
+import res_rc

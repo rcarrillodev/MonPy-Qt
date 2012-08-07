@@ -90,7 +90,7 @@ class Ui_About(object):
 
     def retranslateUi(self, About):
         About.setWindowTitle(QtGui.QApplication.translate("About", "About MonPy", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("About", "<html><head/><body><p align=\"center\">MonPy V1.0</p><p align=\"center\">Por Rafael Carrillo de Focus Development</p><p align=\"center\">2012</p><p align=\"center\"><a href=\"http://focusdevelop.blogspot.com\"><span style=\" text-decoration: underline; color:#0000ff;\">FocusDevelopment</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_2.setText(QtGui.QApplication.translate("About", "<html><head/><body><p align=\"center\">MonPy V1.5</p><p align=\"center\">Por Rafael Carrillo de Focus Development</p><p align=\"center\">2012</p><p align=\"center\"><a href=\"http://focusdevelop.blogspot.com\"><span style=\" text-decoration: underline; color:#0000ff;\">FocusDevelopment</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("About", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.txtLicence.setPlainText(QtGui.QApplication.translate("About", "Este programa es software libre: Puedes redistribuirlo y/o modificarlo bajo los terminos de la Licencia GNU/GPL publicados en la FSF.\n"
 "\n"
