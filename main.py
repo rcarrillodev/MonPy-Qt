@@ -45,7 +45,7 @@ class monPy (QtGui.QMainWindow):
 		self.mainWindow=Ui_MainWindow()
 		self.mainWindow.setupUi(self)
 		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap("images/flags/MXN.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(":Flags/images/flags/MXN.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.setWindowIcon(icon)
 		self.inputFrom=self.mainWindow.inputFrom
 		self.inputTo=self.mainWindow.inputTo
@@ -66,8 +66,8 @@ class monPy (QtGui.QMainWindow):
 		pass
 	def fillCombos(self):
 		for country in self.monEx:
-			self.comboFrom.addItem(QtGui.QIcon("images/flags/"+country+".png"),country)
-			self.comboTo.addItem(QtGui.QIcon("images/flags/"+country+".png"),country)
+			self.comboFrom.addItem(QtGui.QIcon(":Flags/images/flags/"+country+".png"),country)
+			self.comboTo.addItem(QtGui.QIcon(":Flags/images/flags/"+country+".png"),country)
 		pass
 
 	def connectUi(self):
@@ -142,7 +142,7 @@ class monPy (QtGui.QMainWindow):
 		dlgAbout=QtGui.QDialog()
 		dlgUI=Ui_About()
 		dlgUI.setupUi(dlgAbout)
-		pic=QtGui.QPixmap("images/logo.jpg")
+		pic=QtGui.QPixmap(":Images/images/logo.jpg")
 		dlgUI.label.setPixmap(pic)
 		dlgAbout.exec_()
 		pass
