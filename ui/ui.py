@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Sun Jul 15 23:37:52 2012
+# Created: Tue Aug  7 01:09:49 2012
 #      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,6 +25,9 @@ class Ui_MainWindow(object):
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QtCore.QSize(308, 142))
         MainWindow.setMaximumSize(QtCore.QSize(345, 156))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("../../../MonPy/images/flags/MXN.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
@@ -52,6 +55,18 @@ class Ui_MainWindow(object):
         self.label_2 = QtGui.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(237, 36, 21, 16))
         self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.btnConf = QtGui.QPushButton(self.centralwidget)
+        self.btnConf.setGeometry(QtCore.QRect(300, 121, 24, 20))
+        self.btnConf.setText(_fromUtf8(""))
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap(_fromUtf8("../MonPy-Qt/images/gear.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnConf.setIcon(icon1)
+        self.btnConf.setFlat(True)
+        self.btnConf.setObjectName(_fromUtf8("btnConf"))
+        self.lblStatus = QtGui.QLabel(self.centralwidget)
+        self.lblStatus.setGeometry(QtCore.QRect(90, 120, 181, 16))
+        self.lblStatus.setText(_fromUtf8(""))
+        self.lblStatus.setObjectName(_fromUtf8("lblStatus"))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -62,4 +77,5 @@ class Ui_MainWindow(object):
         self.btnAbout.setText(QtGui.QApplication.translate("MainWindow", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Convertir:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "a:", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnConf.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p><span style=\" vertical-align:sub;\">Establecer monedas actuales como predeterminadas</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 

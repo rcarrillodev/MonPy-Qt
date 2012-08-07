@@ -1,11 +1,12 @@
-import urllib2, ast,json,re
+import urllib2, ast,re,saving
 
 class negApi():
 	"""Modulo para realizar conversiones monetarias via Google Calculator"""
 	monFrom=None
 	monTo=None
 	mCant=None
-	conv=0.0
+	conv=None
+	save=saving.saving()
 
 	def __init__(self):
 		self.monFrom="USD"
@@ -13,7 +14,13 @@ class negApi():
 		self.mCant=1
 		pass
 
-	
+	def isConnected(self):
+		try:
+			urllib2.urlopen("http://google.com")
+			return True
+		except urllib2.URLError as noConnect:
+			return False
+
 	def doConvertion(self):
 		val=0
 		self.mCant=str(self.mCant)
@@ -33,14 +40,14 @@ class negApi():
     			try:
         			v = ast.literal_eval(v) #Evalua si la literal es un valor entendible para Python
     			except:
-        			print "Couldn't eval " + v 
+        			print ("No se puede evaluar " + v )
     			d[k] = v #Agrega el valor a la tupla
 		try:
 			val= float(re.sub("\D+.\D+","", d["rhs"].decode('utf-8','ignore')))
-			conv=val*float(self.mCant)
+			self.conv=val*float(self.mCant)
 		except ValueError as valErr:
 			print ("Ha introducido un numero enorme!")
-		return conv
+		return self.conv
 
 	def convert(self,mCant,monFrom,monTo):
 		if(self.monFrom==None and self.monTo==None):

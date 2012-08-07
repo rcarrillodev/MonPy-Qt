@@ -1,9 +1,16 @@
+"""
+MonPY realiza cambios de divisa
+Clase principal
+@Rafael Carrillo
+V1.5
+"""
 import sys
-sys.path.append("..")
 from ui.ui import Ui_MainWindow
 from ui.about import Ui_About
 from PyQt4 import QtCore, QtGui
 import functions.negApi as mon
+import functions.saving as sav
+import time
 
 class monPy (QtGui.QMainWindow):
 	"""Este programa permite realizar conversiones entre
@@ -18,6 +25,9 @@ class monPy (QtGui.QMainWindow):
 	inputFrom=None
 	comboFrom=None
 	comboTo=None
+	lblStatus=None
+	prefs=None
+	save=sav.saving()
 
 	def __init__(self):
 		self.setupUI()
@@ -41,6 +51,7 @@ class monPy (QtGui.QMainWindow):
 		self.inputTo=self.mainWindow.inputTo
 		self.comboFrom=self.mainWindow.comboFrom
 		self.comboTo=self.mainWindow.comboTo
+		self.lblStatus=self.mainWindow.lblStatus
 
 		self.inputFrom.setValidator(QtGui.QDoubleValidator())
 		self.inputTo.setValidator(QtGui.QDoubleValidator())
@@ -48,6 +59,8 @@ class monPy (QtGui.QMainWindow):
 		self.fillCombos()
 		self.comboTo.setCurrentIndex(self.monEx.index("MXN"))
 		self.comboFrom.setCurrentIndex(self.monEx.index("USD"))
+		self.checkConn()
+		self.loadPrefs()		
 		self.convert()
 
 		pass
@@ -62,29 +75,68 @@ class monPy (QtGui.QMainWindow):
 		self.comboTo.currentIndexChanged.connect(self.convert)
 		self.inputFrom.textChanged.connect(self.convert)
 		self.mainWindow.btnAbout.clicked.connect(self.showAbout)
-		pass
+		self.mainWindow.btnConf.clicked.connect(self.configure)
+		return
+
+	def configure(self):
+		mfrom=self.monEx[self.comboFrom.currentIndex()]
+		mto=self.monEx[self.comboTo.currentIndex()]
+		mcant=self.doConvert(mfrom,mto,1)
+		data=[mfrom,mto,mcant]
+		if self.save.save(data):
+			self.lblStatus.setText("Configuracion Guardada")
+		else:
+			self.lblStatus.setText("Error al Configurar")
+		return
+	def loadPrefs(self):
+		try:
+			self.prefs=self.save.read()
+			if not (self.prefs==None):
+				self.comboFrom.setCurrentIndex(self.monEx.index(self.prefs[0]))
+				self.comboTo.setCurrentIndex(self.monEx.index(self.prefs[1]))
+				self.convert()
+		except ValueError as badConf:
+			print ("Error al Cargar Configuracion")
+			self.save.delete()
+		return
 
 	def convert(self):
-		mFrom=self.monEx[self.comboFrom.currentIndex()]
-		mTo=self.monEx[self.comboTo.currentIndex()]
-		if self.inputFrom.text()=="":
-			mcant=0
+		self.lblStatus.setText("")
+		if self.checkConn():
+			mFrom=self.monEx[self.comboFrom.currentIndex()]
+			mTo=self.monEx[self.comboTo.currentIndex()]
+			if self.inputFrom.text()=="" or self.inputFrom.text()=="e":
+				mcant=0
+			else:
+				mcant=float(self.inputFrom.text())
+			res=self.doConvert(mFrom,mTo,mcant)
+			if res==None:
+				self.inputTo.setText(str("%.2f"%0.0))			
+				dlg=QtGui.QMessageBox(self)
+				dlg.setText("Error de Conexion")
+				dlg.setIcon(QtGui.QMessageBox.Warning)
+				dlg.open()
+				return
+			self.inputTo.setText(str("%.2f"%res))
 		else:
-			mcant=float(self.inputFrom.text())
-		res=self.doConvert(mFrom,mTo,mcant)
-		if res==None:
-			self.inputTo.setText(str("%.2f"%0.0))			
-			dlg=QtGui.QMessageBox(self)
-			dlg.setText("Error de Conexion")
-			dlg.setIcon(QtGui.QMessageBox.Warning)
-			dlg.open()
-			return
-		self.inputTo.setText(str("%.2f"%res))
+			if self.prefs==None:
+				return	
+			self.comboFrom.setCurrentIndex(self.monEx.index(self.prefs[0]))
+			self.comboTo.setCurrentIndex(self.monEx.index(self.prefs[1]))
+			infrom=self.inputFrom.text()
+			if infrom=="" or infrom=="e":
+				cant=0
+			else:
+				cant=float(infrom)
+			self.inputTo.setText(str("%.2f"%float(self.prefs[2]*float(cant))))
 		pass
 
 	def doConvert(self,mFrom,mTo,cant):
-		r=float(self.query.convert(cant,mFrom,mTo))
-		return r
+		r=self.query.convert(cant,mFrom,mTo)
+		if r==None:
+			print("Error de Conexion")
+			return None
+		return float(r)
 
 	def showAbout(self):
 		dlgAbout=QtGui.QDialog()
@@ -101,6 +153,14 @@ class monPy (QtGui.QMainWindow):
 		g.moveCenter(c)
 		self.move(g.topLeft())
 		pass
+
+	def checkConn(self):
+		connStatus=self.query.isConnected()
+		if connStatus:
+			self.lblStatus.setText("")
+		else:
+			self.lblStatus.setText("Sin Conexion")
+		return connStatus
 
 if __name__ == '__main__':
 	monPy()
