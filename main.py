@@ -69,7 +69,7 @@ class monPy (QtGui.QMainWindow):
 		self.mainWindow=Ui_MainWindow()
 		self.mainWindow.setupUi(self)
 		icon = QtGui.QIcon()
-		icon.addPixmap(QtGui.QPixmap(":Flags/images/flags/MXN.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+		icon.addPixmap(QtGui.QPixmap(":Images/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 		self.setWindowIcon(icon)
 		self.inputFrom=self.mainWindow.inputFrom
 		self.inputTo=self.mainWindow.inputTo
