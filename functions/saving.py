@@ -50,8 +50,7 @@ class saving():
 			self.conf.write("From="+loc+"\n")
 			self.conf.write("To="+conv+"\n")
 			self.conf.write("val="+str(mon))
-			self.conf.write("\n**********Archivo Generado Por MonPY, Cualquier Modificacion \
-Podria dañar el Funcionamiento de la aplicacion************")
+			self.conf.write("\n**********Archivo Generado Por MonPY**********")
 			self.conf.close()
 			return True
 		except IOError as ioe:
@@ -59,14 +58,6 @@ Podria dañar el Funcionamiento de la aplicacion************")
 			self.conf.close()
 			return False
 		pass
-
-	def delete(self):
-		try:
-			os.remove(self.fName)
-		except IOError as ioe:
-			print ("Error al borrar el archivo\n")
-			print ioe
-		return
 
 
 

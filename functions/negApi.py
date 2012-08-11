@@ -1,4 +1,4 @@
-import urllib2, ast,re,saving
+import urllib2, ast,re,saving,socket
 
 class negApi():
 	"""Modulo para realizar conversiones monetarias via Google Calculator"""
@@ -14,21 +14,16 @@ class negApi():
 		self.mCant=1
 		pass
 
-	def isConnected(self):
-		try:
-			urllib2.urlopen("http://google.com")
-			return True
-		except urllib2.URLError as noConnect:
-			return False
-
 	def doConvertion(self):
 		val=0
 		self.mCant=str(self.mCant)
 		try:
-			resp=urllib2.urlopen("http://www.google.com/ig/calculator?hl=en&q=1"+self.monFrom+"=?"+self.monTo+"").read()		
+			resp=urllib2.urlopen("http://www.google.com/ig/calculator?hl=en&q=1"+self.monFrom+"=?"+self.monTo+"",None,0.5).read()		
 		except urllib2.URLError as error:
 			print ("Error al consultar el tipo de cambio, error de conexion")
-			print (error)
+			return None
+		except socket.timeout:
+			print("Tiempo agotado")
 			return None
 
 		d = {} #Tupla para guardar claves y valores 

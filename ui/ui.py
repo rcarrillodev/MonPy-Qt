@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'main.ui'
 #
-# Created: Tue Aug  7 13:05:45 2012
+# Created: Sat Aug 11 00:21:19 2012
 #      by: PyQt4 UI code generator 4.9.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QtCore.QRect(237, 36, 21, 16))
         self.label_2.setObjectName(_fromUtf8("label_2"))
         self.btnConf = QtGui.QPushButton(self.centralwidget)
-        self.btnConf.setGeometry(QtCore.QRect(300, 121, 24, 20))
+        self.btnConf.setGeometry(QtCore.QRect(300, 120, 24, 21))
         self.btnConf.setText(_fromUtf8(""))
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(_fromUtf8(":/Images/images/gear.svg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -67,6 +67,14 @@ class Ui_MainWindow(object):
         self.lblStatus.setGeometry(QtCore.QRect(90, 120, 181, 16))
         self.lblStatus.setText(_fromUtf8(""))
         self.lblStatus.setObjectName(_fromUtf8("lblStatus"))
+        self.btnUpdate = QtGui.QPushButton(self.centralwidget)
+        self.btnUpdate.setGeometry(QtCore.QRect(270, 120, 24, 24))
+        self.btnUpdate.setText(_fromUtf8(""))
+        icon2 = QtGui.QIcon()
+        icon2.addPixmap(QtGui.QPixmap(_fromUtf8(":/Images/images/update.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.btnUpdate.setIcon(icon2)
+        self.btnUpdate.setFlat(True)
+        self.btnUpdate.setObjectName(_fromUtf8("btnUpdate"))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -78,5 +86,6 @@ class Ui_MainWindow(object):
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Convertir:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "a:", None, QtGui.QApplication.UnicodeUTF8))
         self.btnConf.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p><span style=\" vertical-align:sub;\">Establecer monedas actuales como predeterminadas</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.btnUpdate.setToolTip(QtGui.QApplication.translate("MainWindow", "<html><head/><body><p>Actualizar Valor de Moneda</p><p><br/></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
 
 import res_rc

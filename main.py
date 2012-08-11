@@ -7,27 +7,47 @@ V1.5
 import sys
 from ui.ui import Ui_MainWindow
 from ui.about import Ui_About
-from PyQt4 import QtCore, QtGui
+try:
+	from PyQt4 import QtCore, QtGui
+except ImportError:
+	print ("Error al importar PyQT4, revisa que esta instalado")
+	exit()
 import functions.negApi as mon
 import functions.saving as sav
-import time
+import datetime
 
 class monPy (QtGui.QMainWindow):
 	"""Este programa permite realizar conversiones entre
 	Monedas soportadas por Google Calculator, el valor de
 	cada moneda esta sujeto los datos que google tenga
 	actualizados"""
+	#Lista de Monedas
+	monEx=sorted(["USD", "MXN", "EUR", "GBP", "INR", "AUD", "CAD", "JPY", "RMB", "THB", "SGD"])
 
-	monEx=sorted(["USD","MXN","EUR","GBP","INR","AUD","CAD","JPY","RMB","THB","SGD"])
+	#Constructor de la clase de conversiones
 	query=mon.negApi()
+
+	#Constructor de la clase de guardado de datos
+	save=sav.saving() 
+
+	#Elementos de la Interfaz de Usuario
 	mainWindow=None
 	inputTo=None
 	inputFrom=None
 	comboFrom=None
 	comboTo=None
 	lblStatus=None
-	prefs=None
-	save=sav.saving()
+
+	#Variables
+	prefs=None #Preferencias
+	
+	#Valor de la moneda actual
+	valorActual=0.0
+	#Moneda local 
+	monFrom="" 
+	#Moneda Extranjera
+	monTo=""
+
 
 	def __init__(self):
 		self.setupUI()
@@ -40,6 +60,10 @@ class monPy (QtGui.QMainWindow):
 
 
 	def setupUI(self):
+		"""
+		Carga los objetos de la interfaz en variables locales
+		Carga la configuracion guardada y realiza la conversion inicial
+		"""
 		self.app=QtGui.QApplication(sys.argv)
 		QtGui.QMainWindow.__init__(self)
 		self.mainWindow=Ui_MainWindow()
@@ -57,87 +81,111 @@ class monPy (QtGui.QMainWindow):
 		self.inputTo.setValidator(QtGui.QDoubleValidator())
 		self.inputFrom.setText("1")
 		self.fillCombos()
-		self.comboTo.setCurrentIndex(self.monEx.index("MXN"))
-		self.comboFrom.setCurrentIndex(self.monEx.index("USD"))
-		self.checkConn()
-		self.loadPrefs()		
+		self.loadPrefs()	
+		self.update()	
 		self.convert()
 
 		pass
+
+	#Ok
 	def fillCombos(self):
 		for country in self.monEx:
 			self.comboFrom.addItem(QtGui.QIcon(":Flags/images/flags/"+country+".png"),country)
 			self.comboTo.addItem(QtGui.QIcon(":Flags/images/flags/"+country+".png"),country)
 		pass
 
+	#Checar Convert
 	def connectUi(self):
-		self.comboFrom.currentIndexChanged.connect(self.convert)
-		self.comboTo.currentIndexChanged.connect(self.convert)
+		self.comboFrom.currentIndexChanged.connect(self.comboChanged)
+		self.comboTo.currentIndexChanged.connect(self.comboChanged)
 		self.inputFrom.textChanged.connect(self.convert)
 		self.mainWindow.btnAbout.clicked.connect(self.showAbout)
 		self.mainWindow.btnConf.clicked.connect(self.configure)
+		self.mainWindow.btnUpdate.clicked.connect(self.update)
 		return
 
+	#Ok
 	def configure(self):
-		mfrom=self.monEx[self.comboFrom.currentIndex()]
-		mto=self.monEx[self.comboTo.currentIndex()]
-		mcant=self.doConvert(mfrom,mto,1)
-		data=[mfrom,mto,mcant]
+		data=[self.monFrom,self.monTo,self.valorActual]
 		if self.save.save(data):
 			self.lblStatus.setText("Configuracion Guardada")
 		else:
 			self.lblStatus.setText("Error al Configurar")
 		return
+
+	#Ok
+	def comboChanged(self):
+		self.monFrom=self.monEx[self.comboFrom.currentIndex()]
+		self.monTo=self.monEx[self.comboTo.currentIndex()]
+		self.update()
+		self.convert()
+		return
+
+	#Ok
 	def loadPrefs(self):
 		try:
 			self.prefs=self.save.read()
 			if not (self.prefs==None):
-				self.comboFrom.setCurrentIndex(self.monEx.index(self.prefs[0]))
-				self.comboTo.setCurrentIndex(self.monEx.index(self.prefs[1]))
-				self.convert()
+				self.monFrom=self.prefs[0]
+				self.monTo=self.prefs[1]
+				self.valorActual=self.prefs[2]
+			else:
+				self.monFrom="USD"
+				self.monTo="MXN"
 		except ValueError as badConf:
 			print ("Error al Cargar Configuracion")
-			self.save.delete()
+			self.monFrom="USD"
+			self.monTo="MXN"
+			self.valorActual=0
+		finally:
+			self.comboFrom.setCurrentIndex(self.monEx.index(self.monFrom))
+			self.comboTo.setCurrentIndex(self.monEx.index(self.monTo))
+
 		return
 
 	def convert(self):
-		self.lblStatus.setText("")
-		if self.checkConn():
-			mFrom=self.monEx[self.comboFrom.currentIndex()]
-			mTo=self.monEx[self.comboTo.currentIndex()]
-			if self.inputFrom.text()=="" or self.inputFrom.text()=="e":
-				mcant=0
-			else:
-				mcant=float(self.inputFrom.text())
-			res=self.doConvert(mFrom,mTo,mcant)
-			if res==None:
-				self.inputTo.setText(str("%.2f"%0.0))			
-				dlg=QtGui.QMessageBox(self)
-				dlg.setText("Error de Conexion")
-				dlg.setIcon(QtGui.QMessageBox.Warning)
-				dlg.open()
-				return
-			self.inputTo.setText(str("%.2f"%res))
-		else:
-			if self.prefs==None:
-				return	
-			self.comboFrom.setCurrentIndex(self.monEx.index(self.prefs[0]))
-			self.comboTo.setCurrentIndex(self.monEx.index(self.prefs[1]))
-			infrom=self.inputFrom.text()
-			if infrom=="" or infrom=="e":
-				cant=0
-			else:
-				cant=float(infrom)
-			self.inputTo.setText(str("%.2f"%float(self.prefs[2]*float(cant))))
-		pass
 
-	def doConvert(self,mFrom,mTo,cant):
-		r=self.query.convert(cant,mFrom,mTo)
+		self.lblStatus.setText("")
+		txt=self.inputFrom.text()
+		conv=0
+		r=0.0
+		if not(txt=="" or txt=="e"):
+			r=float(txt)*self.valorActual
+
+		self.inputTo.setText(str("%.2f"%r))
+		return
+
+	#Ok
+	def update(self):
+		self.lblStatus.setText("Actualizando....")
+		r=self.query.convert(1,self.monFrom,self.monTo)
 		if r==None:
 			print("Error de Conexion")
-			return None
-		return float(r)
+			self.lblStatus.setText("Sin Conexion")
+			return
 
+		self.lblStatus.setText("Actualizado")
+		self.valorActual=r
+		return
+
+
+	# def offline(self):
+	# 	if self.prefs==None:
+	# 			return	
+	# 	self.comboFrom.setCurrentIndex(self.monEx.index(self.prefs[0]))
+	# 	self.comboTo.setCurrentIndex(self.monEx.index(self.prefs[1]))
+	# 	infrom=self.inputFrom.text()
+	# 	if infrom=="" or infrom=="e":
+	# 		cant=0
+	# 	else:
+	# 		cant=float(infrom)
+	# 		self.inputTo.setText(str("%.2f"%float(self.prefs[2]*float(cant))))
+	# 	return
+
+
+
+	#---------- Tareas de la Interfaz -------- #
+	#OK
 	def showAbout(self):
 		dlgAbout=QtGui.QDialog()
 		dlgUI=Ui_About()
@@ -147,6 +195,7 @@ class monPy (QtGui.QMainWindow):
 		dlgAbout.exec_()
 		pass
 
+	#Ok
 	def centrarVentana(self):
 		g=self.frameGeometry()
 		c=QtGui.QDesktopWidget().availableGeometry().center()
@@ -154,13 +203,6 @@ class monPy (QtGui.QMainWindow):
 		self.move(g.topLeft())
 		pass
 
-	def checkConn(self):
-		connStatus=self.query.isConnected()
-		if connStatus:
-			self.lblStatus.setText("")
-		else:
-			self.lblStatus.setText("Sin Conexion")
-		return connStatus
 
 if __name__ == '__main__':
 	monPy()
