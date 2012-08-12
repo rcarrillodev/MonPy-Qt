@@ -178,7 +178,7 @@ class monPy (QtGui.QMainWindow):
 		dlgAbout=QtGui.QDialog()
 		dlgUI=Ui_About()
 		dlgUI.setupUi(dlgAbout)
-		pic=QtGui.QPixmap(":Images/images/logo.jpg")
+		pic=QtGui.QPixmap(":Images/images/icon.png")
 		dlgUI.label.setPixmap(pic)
 		dlgAbout.exec_()
 		pass
