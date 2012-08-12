@@ -18,7 +18,7 @@ class negApi():
 		val=0
 		self.mCant=str(self.mCant)
 		try:
-			resp=urllib2.urlopen("http://www.google.com/ig/calculator?hl=en&q=1"+self.monFrom+"=?"+self.monTo+"",None,0.5).read()		
+			resp=urllib2.urlopen("http://www.google.com/ig/calculator?hl=en&q=1"+self.monFrom+"=?"+self.monTo+"",None,3).read()		
 		except urllib2.URLError as error:
 			print ("Error al consultar el tipo de cambio, error de conexion")
 			return None

@@ -117,7 +117,9 @@ class monPy (QtGui.QMainWindow):
 	def comboChanged(self):
 		self.monFrom=self.monEx[self.comboFrom.currentIndex()]
 		self.monTo=self.monEx[self.comboTo.currentIndex()]
-		self.update()
+		if self.update():
+			self.convert()
+			return
 		self.convert()
 		return
 
@@ -162,26 +164,12 @@ class monPy (QtGui.QMainWindow):
 		if r==None:
 			print("Error de Conexion")
 			self.lblStatus.setText("Sin Conexion")
-			return
+			return False
 
-		self.lblStatus.setText("Actualizado")
 		self.valorActual=r
-		return
-
-
-	# def offline(self):
-	# 	if self.prefs==None:
-	# 			return	
-	# 	self.comboFrom.setCurrentIndex(self.monEx.index(self.prefs[0]))
-	# 	self.comboTo.setCurrentIndex(self.monEx.index(self.prefs[1]))
-	# 	infrom=self.inputFrom.text()
-	# 	if infrom=="" or infrom=="e":
-	# 		cant=0
-	# 	else:
-	# 		cant=float(infrom)
-	# 		self.inputTo.setText(str("%.2f"%float(self.prefs[2]*float(cant))))
-	# 	return
-
+		self.convert()
+		self.lblStatus.setText("Actualizado")
+		return True
 
 
 	#---------- Tareas de la Interfaz -------- #
