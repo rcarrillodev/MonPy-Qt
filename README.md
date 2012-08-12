@@ -34,7 +34,7 @@ La version para WINDOWS ya incluye las librerias y básta solo con ejecutar el .
 
 
 Como Usar?
-==========
+----------
 + Al abrir el programa introduzca en el primer cuadro de texto la cantidad a ser convertida
 + Seleccione de la primer lista la moneda local (desde donde esta haciendo la conversion) y en la siguiente lista la moneda a la cual desea convertir la cantidad especificada.
 + En el cuadro de abajo aparecera la cantidad convertida.
@@ -61,7 +61,7 @@ conceder acceso al codigo fuente como está especificado en el documento : http:
 
 Preguntas, Sugerencias y / o reportes de problemas por éste medio en el apartado "Issues" o bien en la pagina de la 
 aplicacion:
-http://rafurudev.wordpress.com/programas-y-aplicaciones/monpy/
+http://rafuru.github.com/MonPy-Qt
 
 
 Release Log:
