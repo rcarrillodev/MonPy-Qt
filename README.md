@@ -49,7 +49,7 @@ Release Log:
 
 + (1.0) 16-Jul-2012 : Version Inicial
 + (1.5)	11-Ago-2012 : 
-	+[Nuevo] Opcion para guaradar moneda preferida
-	+[Nuevo] Opcion para actualizar la moneda actual
-	+[BugFix]	Optimizado el uso de conexion y modo off-line para moneda preferida
-	+[BugFix]	Mejoras en el codigo (muchas)
+	+ [Nuevo] Opcion para guaradar moneda preferida
+	+ [Nuevo] Opcion para actualizar la moneda actual
+	+ [BugFix]	Optimizado el uso de conexion y modo off-line para moneda preferida
+	+ [BugFix]	Mejoras en el codigo (muchas)
