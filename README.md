@@ -1,6 +1,10 @@
 MonPy-Qt
 ========
 
+Este proyecto ha sido descontinuado dado que la url que se usaba ya no existe.
+==============================================================================
+
+
 MonPy es una pequeña aplicacion realizada en Python con ayuda de PyQt que permite consultar el tipo de cambio en
 distintas monedas del mundo.
 
